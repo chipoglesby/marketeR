@@ -1,0 +1,7 @@
+.Rhistory
+.Rapp.history
+.Rbuildignore
+cran-comments.md
+tests
+.httr-oauth
+.DS_Store

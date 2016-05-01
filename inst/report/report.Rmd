@@ -1,0 +1,92 @@
+```{r, echo=FALSE, message=FALSE}
+#-------------------------------------------------------------------------------
+# report.Rmd (marketeR)
+#-------------------------------------------------------------------------------
+
+# Set up general .rmd options --------------------------------------------------
+options(digits = 0, scipen = 999)
+monthName <- format(basicMetrics.data$yearMonth[nrow(basicMetrics.data)], '%B %Y')
+```
+
+---
+title: "report - Month of `r monthName`"
+author: "Generated with marketeR, a web analytics toolbox for digital marketers"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+---
+
+# Executive Summary
+***
+
+* There was about `r sessions.currentMonth` sessions on the website. (MoM relative change is `r sessions.relativeChange` %).
+* Among those sessions, about `r percentNewsessions.currentMonth`% were new sessions. (MoM relative change is `r percentNewsessions.relativeChange` pts).
+* The average session duration was about `r avgSessionDuration.currentMonth` seconds. (MoM relative change is `r avgSessionDuration.relativeChange` %).
+* The bounce rate is about `r bounceRate.currentMonth`%. (MoM relative change is `r bounceRate.relativeChange` pts).
+* The mobile rate is `r percent(deviceCategory.currentMonth$percentages)`. (MoM relative change is `r deviceCategory.relativeChange` pts).
+* The top keyword was "`r keyword.data$keyword[1]`" with `r keyword.data$sessions[1]` sessions.
+* The top content was "`r topContent.data$pagePath[1]`" with `r topContent.data$sessions[1]` sessions.
+
+# Basic Metrics
+***
+
+```{r, echo=FALSE, message=FALSE}
+multiplot(sessions.plot, percentNewsessions.plot, avgSessionDuration.plot, bounceRate.plot, cols = 2)
+```
+
+# Distributed Metrics
+***
+
+### Sessions distributed by Channel Grouping
+```{r, echo=FALSE, results="asis"}
+channelGrouping.plot
+```
+
+### Sessions distributed by social channels
+```{r, echo=FALSE, message=FALSE}
+socialNetwork.plot
+```
+
+### Sessions distributed by devices
+```{r, echo=FALSE, message=FALSE}
+deviceCategory.plot
+```
+
+# User Metrics
+***
+
+### Country
+```{r, echo=FALSE, results="asis"}
+country.data <-
+country.data %>%
+  select(country, sessions)
+knitr::kable(country.data)
+```
+
+### User Gender
+```{r, echo=FALSE, message=FALSE}
+userGender.plot
+```
+
+### User Age Bracket
+```{r, echo=FALSE, message=FALSE}
+userAgeBracket.plot
+```
+
+# Content Metrics
+***
+
+### Top keywords
+```{r, echo=FALSE, results="asis"}
+keyword.data <-
+keyword.data %>%
+  select(keyword, sessions)
+knitr::kable(keyword.data)
+```
+
+### Top content
+```{r, echo=FALSE, results="asis"}
+topContent.data <-
+topContent.data %>%
+  select(pagePath, sessions)
+knitr::kable(topContent.data)
+```

@@ -1,0 +1,27 @@
+Package: marketeR
+Version: 0.5
+Title: A Web Analytics Toolbox for Digital Marketers
+Description: Provides a web analytics toolbox for marketers using Google
+    Analytics.
+Author: Felix MIKAELIAN <felix.mikaelian@essec.edu>
+Maintainer: Felix MIKAELIAN <felix.mikaelian@essec.edu>
+Depends:
+    R (>= 3.2.1),
+    RGoogleAnalytics
+Imports:
+    forecast,
+    lubridate,
+    timeDate,
+    zoo,
+    plyr,
+    dplyr,
+    grid,
+    scales,
+    ggplot2,
+    ggthemes,
+    rmarkdown,
+    knitr
+License: GPL (>= 2)
+URL: https://github.com/naileakim/marketeR
+BugReports: https://github.com/naileakim/marketeR/issues
+RoxygenNote: 5.0.1
