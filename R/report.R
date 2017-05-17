@@ -166,26 +166,23 @@ report <- function(website) {
 
   # Add percentages ------------------------------------------------------------
 
-  channelGrouping.data <- ddply(channelGrouping.data,
-                                "yearMonth",
-                                transform,
-                                percentages = sessions / sum(sessions))
+  channelGrouping.data %<>% 
+    group_by(yearMonth) %>% 
+    mutate(percentages = sessions / sum(sessions))
+      
+  deviceCategory.data %<>% 
+    group_by(yearMonth) %>% 
+    mutate(percentages = sessions / sum(sessions))
 
-  deviceCategory.data <- ddply(deviceCategory.data,
-                               "yearMonth",
-                               transform,
-                               percentages = sessions / sum(sessions))
+  userGender.data %<>% 
+    group_by(yearMonth) %>% 
+    mutate(percentages = sessions / sum(sessions))
 
-  userGender.data <- ddply(userGender.data,
-                           "yearMonth",
-                           transform,
-                           percentages = sessions / sum(sessions))
-
-  userAgeBracket.data <- ddply(userAgeBracket.data,
-                               "yearMonth",
-                               transform,
-                               percentages = sessions / sum(sessions))
-
+  userAgeBracket.data %<>% 
+    group_by(yearMonth) %>% 
+    mutate(percentages = sessions / sum(sessions))
+                              
+  
   # Prepare socialNetwork.data data for making a ggplot2 pie chart -------------
 
   others = data.frame(yearMonth = socialNetwork.data$yearMonth[1],
@@ -356,7 +353,7 @@ report <- function(website) {
 
   deviceCategory.plot <-
     ggplot(deviceCategory.data, aes(x = yearMonth, y = percentages)) +
-    geom_bar(aes(fill = deviceCategory), breaks = date_breaks("month")) +
+    geom_bar(aes(fill = deviceCategory), stat = "identity") +
     scale_x_date(labels = date_format("%b %Y"), breaks = 0:12) +
     scale_y_continuous(labels = percent_format()) +
     theme_economist() +
